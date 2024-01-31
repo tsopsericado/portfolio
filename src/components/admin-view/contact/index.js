@@ -1,5 +1,5 @@
 "use client";
 
 export default function AdminContactView() {
-  return <div></div>;
+  return <div>AdminContactView</div>;
 }
