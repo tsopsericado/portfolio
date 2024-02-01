@@ -1,13 +1,16 @@
 import { mongoose } from "mongoose";
 
-const HomeSchema = new mongoose.Schema(
+const ProjectSchema = new mongoose.Schema(
   {
-    heading: string,
-    summary: string,
+    name: String,
+    technologies: String,
+    website: String,
+    github: String,
   },
   { timeStamps: true }
 );
 
-const Home = mongoose.models.Home || mongoose.models("Home", HomeSchema);
+const Project =
+  mongoose.models.Project || mongoose.models("Project", ProjectSchema);
 
-export default Home;
+export default Project;

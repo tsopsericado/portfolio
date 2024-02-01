@@ -1,13 +1,17 @@
 import { mongoose } from "mongoose";
 
-const HomeSchema = new mongoose.Schema(
+const ExperienceSchema = new mongoose.Schema(
   {
-    heading: string,
-    summary: string,
+    position: String,
+    company: String,
+    duration: String,
+    location: String,
+    jobprofile: String,
   },
   { timeStamps: true }
 );
 
-const Home = mongoose.models.Home || mongoose.models("Home", HomeSchema);
+const Experience =
+  mongoose.models.Experience || mongoose.models("Experience", ExperienceSchema);
 
-export default Home;
+export default Experience;

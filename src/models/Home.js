@@ -2,8 +2,8 @@ import { mongoose } from "mongoose";
 
 const HomeSchema = new mongoose.Schema(
   {
-    heading: string,
-    summary: string,
+    heading: String,
+    summary: String,
   },
   { timeStamps: true }
 );

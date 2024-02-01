@@ -1,13 +1,15 @@
 import { mongoose } from "mongoose";
 
-const HomeSchema = new mongoose.Schema(
+const EducationSchema = new mongoose.Schema(
   {
-    heading: string,
-    summary: string,
+    degree: String,
+    year: String,
+    college: String,
   },
   { timeStamps: true }
 );
 
-const Home = mongoose.models.Home || mongoose.models("Home", HomeSchema);
+const Education =
+  mongoose.models.Education || mongoose.models("Education", EducationSchema);
 
-export default Home;
+export default Education;

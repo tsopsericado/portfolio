@@ -1,13 +1,16 @@
 import { mongoose } from "mongoose";
 
-const HomeSchema = new mongoose.Schema(
+const AboutSchema = new mongoose.Schema(
   {
-    heading: string,
-    summary: string,
+    aboutme: String,
+    noofprojects: String,
+    yearofexperience: String,
+    noofclients: String,
+    skills: String,
   },
   { timeStamps: true }
 );
 
-const Home = mongoose.models.Home || mongoose.models("Home", HomeSchema);
+const About = mongoose.models.About || mongoose.models("About", AboutSchema);
 
-export default Home;
+export default About;
