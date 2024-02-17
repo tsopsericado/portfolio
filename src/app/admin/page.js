@@ -6,7 +6,8 @@ import AdminEducationView from "@/components/admin-view/education";
 import AdminExperienceView from "@/components/admin-view/experience";
 import AdminHomeView from "@/components/admin-view/home";
 import AdminProjectView from "@/components/admin-view/project";
-import { useState } from "react";
+import { addData, getData, updateData } from "@/services";
+import { useEffect, useState } from "react";
 
 const initialHomeformData = {
   heading: "",
@@ -53,6 +54,9 @@ export default function AdminView() {
     initialProjectformData
   );
 
+  const [allData, setAllData] = useState({});
+  const [update, setUpdate] = useState(false);
+
   const menuItems = [
     {
       id: "home",
@@ -61,6 +65,8 @@ export default function AdminView() {
         <AdminHomeView
           formData={homeViewFormData}
           setFormData={setHomeViewFormData}
+          handleSaveData={handleSaveData}
+          data={allData?.home}
         />
       ),
     },
@@ -71,6 +77,8 @@ export default function AdminView() {
         <AdminAboutView
           formData={aboutViewFormData}
           setFormData={setAboutViewFormData}
+          handleSaveData={handleSaveData}
+          data={allData?.about}
         />
       ),
     },
@@ -81,6 +89,8 @@ export default function AdminView() {
         <AdminExperienceView
           formData={experienceViewFormData}
           setFormData={setExperienceViewFormData}
+          handleSaveData={handleSaveData}
+          data={allData?.experience}
         />
       ),
     },
@@ -91,6 +101,8 @@ export default function AdminView() {
         <AdminEducationView
           formData={educationViewFormData}
           setFormData={setEducationViewFormData}
+          handleSaveData={handleSaveData}
+          data={allData?.education}
         />
       ),
     },
@@ -101,6 +113,8 @@ export default function AdminView() {
         <AdminProjectView
           formData={projectViewFormData}
           setFormData={setProjectViewFormData}
+          handleSaveData={handleSaveData}
+          data={allData?.project}
         />
       ),
     },
@@ -110,6 +124,70 @@ export default function AdminView() {
       component: <AdminContactView />,
     },
   ];
+
+  // create the list of data on page load
+  async function extractAllData() {
+    const data = await getData(currenSelectedTab);
+
+    if (
+      currenSelectedTab === "home" &&
+      response &&
+      response.data &&
+      response.data.length
+    ) {
+      setHomeViewFormData(data && data.data[0]);
+      setUpdate(true);
+    }
+
+    if (
+      currenSelectedTab === "about" &&
+      response &&
+      response.data &&
+      response.data.length
+    ) {
+      setAboutViewFormData(data && data.data[0]);
+      setUpdate(true);
+    }
+
+    if (response?.success) {
+      setAllData({
+        ...allData,
+        [currenSelectedTab]: response && response.data,
+      });
+    }
+  }
+
+  async function handleSaveData() {
+    const dataMap = {
+      home: homeViewFormData,
+      education: educationViewFormData,
+      experience: experienceViewFormData,
+      about: aboutViewFormData,
+      project: projectViewFormData,
+    };
+
+    const response = update
+      ? await updateData(currenSelectedTab, dataMap[currenSelectedTab])
+      : await addData(currenSelectedTab, dataMap[currenSelectedTab]);
+    console.log(response, "response");
+
+    if (response.success) {
+      resetFormDatas();
+      extractAllData;
+    }
+  }
+
+  useEffect(() => {
+    extractAllData;
+  }, [currenSelectedTab]);
+
+  function resetFormDatas() {
+    setHomeViewFormData(initialHomeformData),
+      setAboutViewFormData(initialAboutformData),
+      setEducationViewFormData(initialEducationformData),
+      setProjectViewFormData(initialProjectformData),
+      setExperienceViewFormData(initialExperienceformData);
+  }
 
   return (
     <div className="border-b border-gray-500 ">
@@ -121,6 +199,8 @@ export default function AdminView() {
             className="p-4 font-bold text-xl text-black"
             onClick={() => {
               setCurrenSelectedTab(item.id);
+              resetFormDatas();
+              setUpdate(false);
             }}
           >
             {item.label}

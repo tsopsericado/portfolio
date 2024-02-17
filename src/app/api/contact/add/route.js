@@ -9,7 +9,7 @@ export async function POST(req) {
   try {
     await connectToDB();
     const extractData = await req.json();
-    const saveData = await Home.create(extractData);
+    const saveData = await Contact.create(extractData);
 
     if (saveData) {
       return NextResponse.json({

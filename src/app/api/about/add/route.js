@@ -1,5 +1,5 @@
 import connectToDB from "@/app/database";
-import Home from "@/models/Home";
+import About from "@/models/About";
 
 import { NextResponse } from "next/server";
 
@@ -9,7 +9,7 @@ export async function POST(req) {
   try {
     await connectToDB();
     const extractData = await req.json();
-    const saveData = await Home.create(extractData);
+    const saveData = await About.create(extractData);
 
     if (saveData) {
       return NextResponse.json({
