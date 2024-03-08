@@ -46,16 +46,16 @@ export default function AdminAboutView({
       <div className="bg-[#fffff] shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-10">
           {data && data.length
-            // ? data.map((item) => (
-            //     <div>
-            //       <p className="flex flex-col gap-4 border p-4 border-green-600">
-            //         {item.aboutme}
-            //       </p>
-            //       <p>{item.noofprojects}</p>
-            //       <p>{item.yearofexperience}</p>
-            //       <p>{item.noofclients}</p>
-            //       <p>{item.skills}</p>
-            //     </div>
+            ? data.map((item) => (
+                <div>
+                  <p className="flex flex-col gap-4 border p-4 border-green-600">
+                    {item.aboutme}
+                  </p>
+                  <p>{item.noofprojects}</p>
+                  <p>{item.yearofexperience}</p>
+                  <p>{item.noofclients}</p>
+                  <p>{item.skills}</p>
+                </div>
               ))
             : null}
         </div>
